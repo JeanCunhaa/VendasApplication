@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class PedidoServiceImpl implements PedidoService{
 
 
         List<ItemPedido> itensPedidos = converterItens(pedido, dto.getItens());
+        pedido.setTotal(calcularTotalPedido(itensPedidos));
         repository.save(pedido);
         itensPedidoRepository.saveAll(itensPedidos);
         pedido.setItens(itensPedidos);
@@ -71,6 +73,23 @@ public class PedidoServiceImpl implements PedidoService{
 
     }
 
-    //
+    private BigDecimal calcularTotalPedido(List<ItemPedido> itens) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (ItemPedido item : itens) {
+            BigDecimal subtotalItem = item.getProduto().getPreco().multiply(BigDecimal.valueOf(item.getQuantidade()));
+            total = total.add(subtotalItem);
+        }
+
+        return total;
+    }
+
+
+    // TODO: 31/10/2023 : eu quero que voce faca um endpoint, que dado duas datas, data inicial e final, sendo que a final, não pode
+    // ser inferior a incial, quero que voce liste todos os clientes que fizeram pedidos nesse intervalo de tempo,
+    // bem como seus pedidos, e eu nao posso recuperar todos os pedidos e clientes de uma vez, recurar filtrados e
+    // organizar no service.
+
+    // TODO: recuperar cliente que fez mais pedidos no ano de 2023
 
 }
