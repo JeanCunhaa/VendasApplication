@@ -85,6 +85,8 @@ public class PedidoServiceImpl implements PedidoService{
     }
 
 
+
+
     // TODO: 31/10/2023 : eu quero que voce faca um endpoint, que dado duas datas, data inicial e final, sendo que a final, não pode
     // ser inferior a incial, quero que voce liste todos os clientes que fizeram pedidos nesse intervalo de tempo,
     // bem como seus pedidos, e eu nao posso recuperar todos os pedidos e clientes de uma vez, recurar filtrados e
