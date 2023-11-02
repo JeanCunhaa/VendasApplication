@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +54,11 @@ public class PedidoServiceImpl implements PedidoService{
         return pedido;
     }
 
+    @Override
+    public Optional<Pedido> obterPedidoCompleto(Integer id) {
+        return repository.findByidFetchItens(id);
+    }
+
     private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> itens) {
         if (itens.isEmpty()) {
             throw new RegraNegocioException("Não é possivel realizar um pedido sem itens.");
@@ -83,6 +89,7 @@ public class PedidoServiceImpl implements PedidoService{
 
         return total;
     }
+
 
 
 
